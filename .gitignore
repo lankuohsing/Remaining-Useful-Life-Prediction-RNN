@@ -1,0 +1,13 @@
+*.*~
+*.pyc
+*.ipynb
+Models/*
+logs/*
+figures/*
+figures_GRU/*
+trash/*
+*.csv
+*.xlsx
+*.png
+data/*
+data_preparation/plot_sensor/*

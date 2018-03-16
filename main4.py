@@ -94,10 +94,11 @@ def show_all_variables():
 run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
-with tf.Session(config=run_config) as sess:
-    for FLAGS.num_layers in [1,2,3,4]:
-        for FLAGS.lstm_size in [100,110,120,130,140,150,160]:
-            for FLAGS.num_steps in [5,10,15,20,25,30]:
+for FLAGS.num_layers in [1,2,3,4]:
+    for FLAGS.lstm_size in [100,110,120,130,140,150,160]:
+        for FLAGS.num_steps in [5,10,15,20,25,30]:
+            with tf.Session(config=run_config) as sess:
+
                 rnn_model = LstmRNN(
                     sess,
                     lstm_size=FLAGS.lstm_size,

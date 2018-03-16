@@ -13,3 +13,4 @@ trash/*
 *.png
 data/*
 data_preparation/plot_sensor/*
+logs_97_1/*

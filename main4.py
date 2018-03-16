@@ -20,7 +20,7 @@ from LSTM_model_RUL import LstmRNN
 '''
 命令行参数定义
 '''
-#tf.reset_default_graph()
+
 flags = tf.app.flags
 flags.DEFINE_string("run_mode", "train", "runing mode,train or test. [train]")
 flags.DEFINE_integer("input_size", 12, "Input size [21]")
@@ -97,6 +97,7 @@ run_config.gpu_options.allow_growth = True
 for FLAGS.num_layers in [1,2,3,4]:
     for FLAGS.lstm_size in [100,110,120,130,140,150,160]:
         for FLAGS.num_steps in [5,10,15,20,25,30]:
+            tf.reset_default_graph()
             with tf.Session(config=run_config) as sess:
 
                 rnn_model = LstmRNN(

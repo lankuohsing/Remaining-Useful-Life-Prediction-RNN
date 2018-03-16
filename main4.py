@@ -125,6 +125,7 @@ with tf.Session(config=run_config) as sess:
                     a=np.sign(a0)*a0/(11.5-1.5*np.sign(a0))
                     b=np.exp(a)-1
                     S=np.sum(b)
+                    print("S:",S)
                     S_list.append(S)
                 else:
                     rnn_model.load()

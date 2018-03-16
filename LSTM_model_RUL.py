@@ -202,7 +202,7 @@ class LstmRNN(object):
 
                     print( "global step:%d [epoch:%d] [learning rate: %.6f] train_loss:%.6f" % (
                             global_step, epoch, learning_rate, train_loss))
-                    if global_step>=10000:
+                    if global_step>=10000 and np.mod(global_step,1000)==1:
                         # Plot samples
                         for indice in sample_indices:
                             sample_X=test_X_list[indice]

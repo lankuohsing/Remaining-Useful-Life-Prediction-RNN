@@ -18,13 +18,14 @@ random.seed(time.time())
 class RULDataSet(object):
     def __init__(self,
                  scaled_train_path='unit_number_RUL.csv',
-                 scaled_test_path='test_FD001.xlsx_scaled.csv',
+                 scaled_test_path='test_FD001_scaled_selected.csv',
                  knee_point_path='knee_point_list.csv',
-                 num_steps=30,
+                 num_steps=10,
                  test_ratio=0.1#测试集占数据集的比例
                  ):
-
+        
         self.num_steps = num_steps
+        print("num_steps:",self.num_steps)
         self.test_ratio = test_ratio
         #unit_DataFrame=pd.read_csv(scaled_train_path,header=None,encoding='utf-8')
 
@@ -115,7 +116,7 @@ class RULDataSet(object):
                 test_RUL_list.append(int(str_list[i]))
                 '''
     # In[]
-    def _generate_train_from_one_unit(self,multi_seq,TIMESTEPS=30):
+    def _generate_train_from_one_unit(self,multi_seq,TIMESTEPS=10):
         X = []
         Y = []
         # 序列的第i项和后面的TIMESTEPS-1项合在一起作为输入;
@@ -148,9 +149,11 @@ class RULDataSet(object):
             # In
             train_X_i=[]
             train_Y_i=[]
-            train_X_i,train_Y_i=self._generate_train_from_one_unit(unit_number_i_good,TIMESTEPS=num_steps)
-            print("train_Y_i.shape:",train_Y_i.shape)
+            train_X_i,train_Y_i=self._generate_train_from_one_unit(unit_number_i_good,TIMESTEPS=self.num_steps)
+            #print("num_steps:",self.num_steps)
+            #print("train_Y_i.shape:",train_Y_i.shape, i)
             train_Y_i_tmp=np.transpose(train_Y_i,[0,2,1])
+            #print("train_Y_i_tmp.shape:",train_Y_i_tmp.shape)
             train_X_list.append(train_X_i)
             train_Y_list.append(train_Y_i_tmp)
         return train_X_list,train_Y_list

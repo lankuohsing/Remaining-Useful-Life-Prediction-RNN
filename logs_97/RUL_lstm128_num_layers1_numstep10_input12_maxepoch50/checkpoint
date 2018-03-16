@@ -1,0 +1,6 @@
+model_checkpoint_path: "RUL_lstm128_num_layers1_numstep10_input12_maxepoch50.model-15350"
+all_model_checkpoint_paths: "RUL_lstm128_num_layers1_numstep10_input12_maxepoch50.model-14601"
+all_model_checkpoint_paths: "RUL_lstm128_num_layers1_numstep10_input12_maxepoch50.model-14801"
+all_model_checkpoint_paths: "RUL_lstm128_num_layers1_numstep10_input12_maxepoch50.model-15001"
+all_model_checkpoint_paths: "RUL_lstm128_num_layers1_numstep10_input12_maxepoch50.model-15201"
+all_model_checkpoint_paths: "RUL_lstm128_num_layers1_numstep10_input12_maxepoch50.model-15350"

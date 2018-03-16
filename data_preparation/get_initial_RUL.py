@@ -71,7 +71,9 @@ for i in range(0,len(train_scaled_increase_sensor_list)):
                    window=window)
     increase_knee_point_list.append(increase_knee_point_i)
 # In[]
-mean_knee_point_increase=np.mean(np.array(increase_knee_point_list))
+total_RUL_increase=np.array([train_scaled_increase_sensor_list[i].shape[0]
+                         for i in range(len(train_scaled_increase_sensor_list))])
+mean_knee_point_increase=np.mean(total_RUL_increase-np.array(increase_knee_point_list))
 
 file=open('increase_knee_point_list.txt','w')
 file.write("increase_knee_point_list:"+str(increase_knee_point_list)+"\n");
@@ -103,7 +105,9 @@ for i in range(0,len(train_scaled_decrease_sensor_list)):
                    window=window)
     decrease_knee_point_list.append(decrease_knee_point_i)
 # In[]
-mean_knee_point_decrease=np.mean(np.array(decrease_knee_point_list))
+total_RUL_decrease=np.array([train_scaled_decrease_sensor_list[i].shape[0]
+                         for i in range(len(train_scaled_decrease_sensor_list))])
+mean_knee_point_decrease=np.mean(total_RUL_decrease-np.array(decrease_knee_point_list))
 
 file=open('decrease_knee_point_list.txt','w')
 file.write("decrease_knee_point_list:"+str(decrease_knee_point_list)+"\n");

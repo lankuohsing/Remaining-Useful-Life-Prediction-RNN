@@ -41,7 +41,7 @@ window=10
 for i in range(0,len(unit_number_list)):
     unit_number_list_i=unit_number_list[i]#这是一个二维数组
     #max_life=unit_number_list_i.shape[0]-(knee_point_np[i,0]+window)
-    max_life=125
+    max_life=97
     unit_RUL_i=np.ones((unit_number_list_i.shape[0],1))*max_life
     knee_index=knee_point_np[i,0]+window-1
     unit_RUL_i[unit_RUL_i.shape[0]-max_life:unit_RUL_i.shape[0],0]=range(max_life-1,-1,-1)
@@ -51,7 +51,7 @@ unit_number_RUL=unit_number_list[0]
 for i in range(1,len(unit_number_list)):
     unit_number_RUL=np.vstack((unit_number_RUL,unit_number_list[i]))
 # In[]
-np.savetxt('unit_number_RUL_125.csv', unit_number_RUL, delimiter = ',')
+np.savetxt('unit_number_RUL_97.csv', unit_number_RUL, delimiter = ',')
 # In[]
 from sklearn.preprocessing import MinMaxScaler
 feature_range=(0,1)
@@ -68,7 +68,7 @@ unit_number_RUL_scaled=unit_number_RUL_scaled_list[0]
 for i in range(1,len(unit_number_list)):
     unit_number_RUL_scaled=np.vstack((unit_number_RUL_scaled,unit_number_RUL_scaled_list[i]))
 # In[]
-np.savetxt('unit_number_RUL_125_scaled.csv', unit_number_RUL_scaled, delimiter = ',')
+np.savetxt('unit_number_RUL_97_scaled.csv', unit_number_RUL_scaled, delimiter = ',')
 # In[]
 # In[]
 scaled_test_path='test_FD001_scaled_selected.csv'

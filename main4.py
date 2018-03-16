@@ -36,8 +36,8 @@ flags.DEFINE_integer("init_epoch", 5, "Num. of epoches considered as early stage
 flags.DEFINE_integer("max_epoch", 50, "Total training epoches. [50]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_integer("sample_size", 10, "Number of units to plot during training. [10]")
-flags.DEFINE_string("logs_dir", "logs_97", "directory for logs. [logs]")
-flags.DEFINE_string("plots_dir", "figures_97", "directory for plot figures. [figures]")
+flags.DEFINE_string("logs_dir", "logs_97_1", "directory for logs. [logs]")
+flags.DEFINE_string("plots_dir", "figures_97_1", "directory for plot figures. [figures]")
 # In[]
 FLAGS = flags.FLAGS
 #打印命令行参数

@@ -242,7 +242,7 @@ class LstmRNN(object):
                                     }
                             test_loss, test_pred = self.sess.run([self.loss_test, self.pred], test_data_feed)
                             #image_path = os.path.join(self.model_plots_dir, "epoch{:02d}_step{:04d}_indice{:04d}.png".format(
-                                     epoch, epoch_step,indice))
+                                     #epoch, epoch_step,indice))
                             sample_pred = test_pred
                             sample_truth = sample_y_flattened
                             #self.plot_samples(sample_pred, sample_truth, image_path)

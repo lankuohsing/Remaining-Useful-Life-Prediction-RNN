@@ -117,11 +117,15 @@ with tf.Session(config=run_config) as sess:
     if FLAGS.run_mode=="train":
         rnn_model.train(RUL_Data, FLAGS)
     else:
+
         rnn_model.load()
         final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
-
+        # In[]
 
 
 
 # In[]
-a=RUL_Data.final_test_X_list
+
+final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
+# In[]
+S=np.sum(np.exp(np.abs(final_test_pred_last_np-final_test_RUL)/13)-1)

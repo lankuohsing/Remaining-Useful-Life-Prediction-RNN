@@ -20,7 +20,7 @@ from LSTM_model_RUL import LstmRNN
 '''
 命令行参数定义
 '''
-#tf.reset_default_graph()
+tf.reset_default_graph()
 flags = tf.app.flags
 flags.DEFINE_string("run_mode", "train", "runing mode,train or test. [train]")
 flags.DEFINE_integer("input_size", 12, "Input size [21]")

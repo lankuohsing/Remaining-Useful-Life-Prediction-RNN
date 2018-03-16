@@ -36,8 +36,8 @@ flags.DEFINE_integer("init_epoch", 5, "Num. of epoches considered as early stage
 flags.DEFINE_integer("max_epoch", 50, "Total training epoches. [50]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_integer("sample_size", 10, "Number of units to plot during training. [10]")
-flags.DEFINE_string("logs_dir", "logs", "directory for logs. [logs]")
-flags.DEFINE_string("plots_dir", "figures", "directory for plot figures. [figures]")
+flags.DEFINE_string("logs_dir", "logs_125", "directory for logs. [logs]")
+flags.DEFINE_string("plots_dir", "figures_125", "directory for plot figures. [figures]")
 # In[]
 FLAGS = flags.FLAGS
 #打印命令行参数
@@ -101,8 +101,8 @@ with tf.Session(config=run_config) as sess:
         )
     show_all_variables()
     RUL_Data=RULDataSet(
-                 scaled_train_path='unit_number_RUL.csv',
-                 scaled_test_path='test_FD001.xlsx_scaled.csv',
+                 scaled_train_path='unit_number_RUL_125.csv',
+                 scaled_test_path='test_FD001_scaled_selected.csv',
                  knee_point_path='knee_point_list.csv',
                  num_steps=FLAGS.num_steps,
                  test_ratio=0.1#测试集占数据集的比例

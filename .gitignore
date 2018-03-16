@@ -3,10 +3,10 @@
 *.ipynb
 Models/*
 logs/*
+logs_125/*
 figures/*
 figures_GRU/*
 trash/*
-*.csv
 *.xlsx
 *.png
 data/*

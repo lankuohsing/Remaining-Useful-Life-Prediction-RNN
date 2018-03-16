@@ -110,7 +110,11 @@ class LstmRNN(object):
         self.targets=tf.reshape(self.targets,[-1])
         # self.loss = -tf.reduce_sum(targets * tf.log(tf.clip_by_value(prediction, 1e-10, 1.0)))
         #self.loss = tf.reduce_mean(tf.square(self.pred - self.targets), name="loss_mse_train")
-        self.loss = tf.reduce_sum(tf.cast(tf.exp(tf.abs(self.pred - self.targets)/10),tf.float32)-1, name="loss_mse_train")
+        a0=self.pred - self.targets
+        a=tf.cast(tf.sign(a0)*a0,tf.float32)/(11.5-1.5*tf.cast(tf.sign(a0),tf.float32))
+        b=tf.exp(tf.cast(a, tf.float32))-1
+        self.loss=tf.reduce_sum(b)
+        #self.loss = tf.reduce_sum(tf.cast(tf.exp(tf.abs(self.pred - self.targets)/10),tf.float32)-1, name="loss_mse_train")
         self.optim = tf.train.RMSPropOptimizer(self.learning_rate).minimize(self.loss, name="rmsprop_optim")
 
         # Separated from train loss.
@@ -224,7 +228,7 @@ class LstmRNN(object):
 
                     print( "global step:%d [epoch:%d] [learning rate: %.6f] train_loss:%.6f" % (
                             global_step, epoch, learning_rate, train_loss))
-                    if global_step>=10000 and np.mod(global_step,1000)==1:
+                    if global_step>=5000 and np.mod(global_step,1000)==1:
                         # Plot samples
                         for indice in sample_indices:
                             sample_X=test_X_list[indice]
@@ -237,11 +241,11 @@ class LstmRNN(object):
                                     self.targets: sample_y_flattened,
                                     }
                             test_loss, test_pred = self.sess.run([self.loss_test, self.pred], test_data_feed)
-                            image_path = os.path.join(self.model_plots_dir, "epoch{:02d}_step{:04d}_indice{:04d}.png".format(
+                            #image_path = os.path.join(self.model_plots_dir, "epoch{:02d}_step{:04d}_indice{:04d}.png".format(
                                      epoch, epoch_step,indice))
                             sample_pred = test_pred
                             sample_truth = sample_y_flattened
-                            self.plot_samples(sample_pred, sample_truth, image_path)
+                            #self.plot_samples(sample_pred, sample_truth, image_path)
 
                     self.save(global_step)
 

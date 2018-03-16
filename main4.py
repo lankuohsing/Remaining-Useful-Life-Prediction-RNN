@@ -22,7 +22,7 @@ from LSTM_model_RUL import LstmRNN
 '''
 
 flags = tf.app.flags
-flags.DEFINE_string("run_mode", "test", "runing mode,train or test. [train]")
+flags.DEFINE_string("run_mode", "train", "runing mode,train or test. [train]")
 flags.DEFINE_integer("input_size", 12, "Input size [21]")
 flags.DEFINE_integer("output_size", 1, "Output size [1]")
 flags.DEFINE_integer("num_steps", 10, "Num of steps [30]")
@@ -36,8 +36,8 @@ flags.DEFINE_integer("init_epoch", 5, "Num. of epoches considered as early stage
 flags.DEFINE_integer("max_epoch", 50, "Total training epoches. [50]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_integer("sample_size", 10, "Number of units to plot during training. [10]")
-flags.DEFINE_string("logs_dir", "logs_97_1", "directory for logs. [logs]")
-flags.DEFINE_string("plots_dir", "figures_97_1", "directory for plot figures. [figures]")
+flags.DEFINE_string("logs_dir", "logs_97_2", "directory for logs. [logs]")
+flags.DEFINE_string("plots_dir", "figures_97_2", "directory for plot figures. [figures]")
 # In[]
 FLAGS = flags.FLAGS
 #打印命令行参数
@@ -85,6 +85,7 @@ train_y_list=dataset_RUL.train_y_list
 test_X_list=dataset_RUL.test_X_list
 test_y_list=dataset_RUL.test_y_list
 # In[]
+S_list=[]
 def show_all_variables():
     model_vars = tf.trainable_variables()
     slim.model_analyzer.analyze_vars(model_vars, print_info=True)
@@ -115,7 +116,20 @@ with tf.Session(config=run_config) as sess:
                  test_ratio=0.1#测试集占数据集的比例
         )
     if FLAGS.run_mode=="train":
-        rnn_model.train(RUL_Data, FLAGS)
+        for FLAGS.num_layers in [1,2,3,4]:
+            for FLAGS.lstm_size in [100,110,120,130,140,150,160]:
+                for FLAGS.num_steps in [5,10,15,20,25,30]:
+                    rnn_model.train(RUL_Data, FLAGS)
+                    final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
+                    final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
+                    a0=final_test_pred_last_np - final_test_RUL
+                    a=np.sign(a0)*a0/(11.5-1.5*np.sign(a0))
+                    b=np.exp(a)-1
+                    S=np.sum(b)
+                    S_list.append(S)
+
+
+
     else:
 
         rnn_model.load()
@@ -125,7 +139,6 @@ with tf.Session(config=run_config) as sess:
 
 
 # In[]
-
-final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
-# In[]
-S=np.sum(np.exp(np.abs(final_test_pred_last_np-final_test_RUL)/13)-1)
+file=open('S_list.txt','w')
+file.write("S_list:"+str(S_list)+"\n");
+file.close()

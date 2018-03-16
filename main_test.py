@@ -23,7 +23,8 @@ import tensorflow as tf
 sess = tf.InteractiveSession()
 cons1 = tf.constant([4, 2, 3], shape=[3])
 cons2 = tf.constant([2, 5, 6], shape=[3])
-a=tf.abs(cons1 - cons2)
+a0=cons1 - cons2
+a=tf.cast(tf.sign(a0)*a0,tf.float32)/(11.5-1.5*tf.cast(tf.sign(a0),tf.float32))
 b=tf.exp(tf.cast(a, tf.float32))-1
 c=tf.reduce_sum(b)
 #loss = tf.reduce_sum(tf.exp(tf.abs(cons1 - cons2))-1, name="loss_mse_train")

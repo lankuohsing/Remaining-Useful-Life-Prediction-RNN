@@ -149,9 +149,10 @@ class RULDataSet(object):
             train_X_i=[]
             train_Y_i=[]
             train_X_i,train_Y_i=self._generate_train_from_one_unit(unit_number_i_good,TIMESTEPS=num_steps)
-            train_Y_i=np.transpose(train_Y_i,[0,2,1])
+            print("train_Y_i.shape:",train_Y_i.shape)
+            train_Y_i_tmp=np.transpose(train_Y_i,[0,2,1])
             train_X_list.append(train_X_i)
-            train_Y_list.append(train_Y_i)
+            train_Y_list.append(train_Y_i_tmp)
         return train_X_list,train_Y_list
      # In[]
     def _generate_test_from_one_unit(self,multi_seq,TIMESTEPS=30):

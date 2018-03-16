@@ -23,7 +23,7 @@ from LSTM_model_RUL import LstmRNN
 
 flags = tf.app.flags
 
-flags.DEFINE_integer("input_size", 21, "Input size [21]")
+flags.DEFINE_integer("input_size", 12, "Input size [21]")
 flags.DEFINE_integer("output_size", 1, "Output size [1]")
 flags.DEFINE_integer("num_steps", 10, "Num of steps [30]")
 flags.DEFINE_integer("num_layers", 1, "Num of layer [1]")

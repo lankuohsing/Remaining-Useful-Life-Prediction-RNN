@@ -95,30 +95,29 @@ run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
 with tf.Session(config=run_config) as sess:
-    rnn_model = LstmRNN(
-            sess,
-            lstm_size=FLAGS.lstm_size,
-            num_layers=FLAGS.num_layers,
-            num_steps=FLAGS.num_steps,
-            input_size=FLAGS.input_size,
-            output_size=FLAGS.output_size,
-            logs_dir=FLAGS.logs_dir,
-            plots_dir=FLAGS.plots_dir,
-            max_epoch=FLAGS.max_epoch
-
-        )
-    show_all_variables()
-    RUL_Data=RULDataSet(
-                 scaled_train_path='unit_number_RUL_97.csv',
-                 scaled_test_path='test_FD001_scaled_selected.csv',
-                 knee_point_path='knee_point_list.csv',
-                 num_steps=FLAGS.num_steps,
-                 test_ratio=0.1#测试集占数据集的比例
-        )
-    if FLAGS.run_mode=="train":
-        for FLAGS.num_layers in [1,2,3,4]:
-            for FLAGS.lstm_size in [100,110,120,130,140,150,160]:
-                for FLAGS.num_steps in [5,10,15,20,25,30]:
+    for FLAGS.num_layers in [1,2,3,4]:
+        for FLAGS.lstm_size in [100,110,120,130,140,150,160]:
+            for FLAGS.num_steps in [5,10,15,20,25,30]:
+                rnn_model = LstmRNN(
+                    sess,
+                    lstm_size=FLAGS.lstm_size,
+                    num_layers=FLAGS.num_layers,
+                    num_steps=FLAGS.num_steps,
+                    input_size=FLAGS.input_size,
+                    output_size=FLAGS.output_size,
+                    logs_dir=FLAGS.logs_dir,
+                    plots_dir=FLAGS.plots_dir,
+                    max_epoch=FLAGS.max_epoch
+                    )
+                show_all_variables()
+                RUL_Data=RULDataSet(
+                        scaled_train_path='unit_number_RUL_97.csv',
+                        scaled_test_path='test_FD001_scaled_selected.csv',
+                        knee_point_path='knee_point_list.csv',
+                        num_steps=FLAGS.num_steps,
+                        test_ratio=0.1#测试集占数据集的比例
+                        )
+                if FLAGS.run_mode=="train":
                     rnn_model.train(RUL_Data, FLAGS)
                     final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
                     final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
@@ -127,13 +126,9 @@ with tf.Session(config=run_config) as sess:
                     b=np.exp(a)-1
                     S=np.sum(b)
                     S_list.append(S)
-
-
-
-    else:
-
-        rnn_model.load()
-        final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
+                else:
+                    rnn_model.load()
+                    final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
         # In[]
 
 

@@ -134,8 +134,8 @@ class LstmRNN(object):
 
 
             test_data_feed = {
-                    #self.learning_rate: 0.0,
-                    #self.keep_prob: 1.0,
+                    self.learning_rate: 0.0,
+                    self.keep_prob: 1.0,
                     self.inputs: sample_X
 
                     }

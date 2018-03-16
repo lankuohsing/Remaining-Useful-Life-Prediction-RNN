@@ -249,11 +249,11 @@ class LstmRNN(object):
 
                     self.save(global_step)
 
-        final_pred, final_loss = self.sess.run([self.pred, self.loss], test_data_feed)
+        #final_pred, final_loss = self.sess.run([self.pred, self.loss], test_data_feed)
 
         # Save the final model
         self.save(global_step)
-        return final_pred
+        return 0
 
     @property
     def model_name(self):

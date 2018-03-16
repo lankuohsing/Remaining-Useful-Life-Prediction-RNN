@@ -51,6 +51,7 @@ class LstmRNN(object):
         self.max_epoch=max_epoch
         self.build_graph()
 
+
     def build_graph(self):
         """
         The model asks for 4 things to be trained:
@@ -121,7 +122,26 @@ class LstmRNN(object):
 
         self.t_vars = tf.trainable_variables()
         self.saver = tf.train.Saver()
+    def test(self, dataset_RUL, config):
+        final_text_X_list=dataset_RUL.final_test_X_list
+        final_text_X_list_indices=list(range(len(final_text_X_list)))
+       #random.shuffle(test_list_indices)#随机打乱
+       #sample_indices=test_list_indices[0:config.sample_size]
+        sample_indices=final_text_X_list_indices
+        test_pred_list=[]
+        for indice in sample_indices:
+            sample_X=final_text_X_list[indice]
 
+
+            test_data_feed = {
+                    #self.learning_rate: 0.0,
+                    #self.keep_prob: 1.0,
+                    self.inputs: sample_X
+
+                    }
+            test_pred = self.sess.run([self.pred], test_data_feed)
+            test_pred_list.append(test_pred)
+        return test_pred_list
     def train(self, dataset_RUL, config):
         """
         Args:
@@ -143,6 +163,7 @@ class LstmRNN(object):
         # Merged test data of different stocks.
         test_X_list = dataset_RUL.test_X_list
         test_y_list = dataset_RUL.test_y_list
+
         # In[]
         '''
         test_X_np=test_X_list[0]

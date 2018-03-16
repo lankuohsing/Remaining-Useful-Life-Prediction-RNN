@@ -22,7 +22,7 @@ from LSTM_model_RUL import LstmRNN
 '''
 
 flags = tf.app.flags
-
+flags.DEFINE_string("run_mode", "test", "runing mode,train or test. [train]")
 flags.DEFINE_integer("input_size", 12, "Input size [21]")
 flags.DEFINE_integer("output_size", 1, "Output size [1]")
 flags.DEFINE_integer("num_steps", 10, "Num of steps [30]")
@@ -59,7 +59,14 @@ batch_size=64
 max_epoch=50
 RUL_Data=RULDataSet()
 dataset_RUL=RUL_Data
-
+final_test_RUL=np.array([112,98,69,82,91,93,91,95,111,96,97,124,95,
+                         107,83,84,50,28,87,16,57,111,113,20,145,119,
+                         66,97,90,115,8,48,106,7,11,19,21,50,142,28,
+                         18,10,59,109,114,47,135,92,21,79,114,29,26,
+                         97,137,15,103,37,114,100,21,54,72,28,128,14,
+                         77,8,121,94,118,50,131,126,113,10,34,107,63,
+                         90,8,9,137,58,118,89,116,115,136,28,38,20,85,
+                         55,128,137,82,59,117,20])
 # In[]
 '''
 num_batches = int(len(dataset_RUL.train_X)) // batch_size#计算num_batches
@@ -107,9 +114,14 @@ with tf.Session(config=run_config) as sess:
                  num_steps=FLAGS.num_steps,
                  test_ratio=0.1#测试集占数据集的比例
         )
-    if FLAGS.train:
+    if FLAGS.run_mode=="train":
         rnn_model.train(RUL_Data, FLAGS)
+    else:
+        rnn_model.load()
+        final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
 
 
 
 
+# In[]
+a=RUL_Data.final_test_X_list

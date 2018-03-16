@@ -23,7 +23,7 @@ class RULDataSet(object):
                  num_steps=10,
                  test_ratio=0.1#测试集占数据集的比例
                  ):
-        
+
         self.num_steps = num_steps
         print("num_steps:",self.num_steps)
         self.test_ratio = test_ratio
@@ -31,6 +31,7 @@ class RULDataSet(object):
 
         # In[]
         unit_number_RUL_scaled_list=self._read_unit_data(scaled_train_path)#读取归一化的传感器数据以及剩余寿命数据
+        unit_number_test_scaled_list=self._read_unit_data(scaled_test_path)#读取归一化的传感器数据以及剩余寿命数据
         # In[]
         knee_point_DataFrame=pd.read_csv(knee_point_path,header=0,encoding='utf-8')
         knee_point_np=knee_point_DataFrame.as_matrix()
@@ -38,6 +39,10 @@ class RULDataSet(object):
         self.train_X_list,self.train_y_list=self._generate_train_from_unit_list(
                 num_steps,
                 unit_number_RUL_scaled_list,
+                knee_point_np)
+        self.final_test_X_list=self._generate_final_test_from_unit_list(#读取真正的测试集
+                num_steps,
+                unit_number_test_scaled_list,
                 knee_point_np)
         #将train_X_list和train_y_list中的元素分别垂直拼接
         train_X_tmp=self.train_X_list[0]
@@ -194,6 +199,44 @@ class RULDataSet(object):
             test_Y_list.append(test_Y_i)
         return test_X_list,test_Y_list
     # In[]
+    # In[]
+    def _generate_final_test_from_one_unit(self,multi_seq,TIMESTEPS=10):
+        X = []
+
+        # 序列的第i项和后面的TIMESTEPS-1项合在一起作为输入;
+        # 第i+TIMESTEPS项和后面的PREDICT_STEPS-1项作为输出
+        # 即用数据的前TIMESTPES个点的信息，预测后面的PREDICT_STEPS个点的值
+        for i in range(len(multi_seq) - TIMESTEPS):
+            X.append(multi_seq[i:i + TIMESTEPS,0:multi_seq.shape[1]])
+
+        return np.array(X, dtype=np.float32)
+    def _generate_final_test_from_unit_list(self,num_steps,unit_number_RUL_scaled_list,knee_point_np):
+        '''
+        从train excel中制作用于训练的数据，用一个大小为num_steps的
+        滑动窗口来获取每个用于训练的数据块，因此数据之间是有重叠的
+        '''
+        # In[]
+        train_X_list=[]
+        for i in range(len(unit_number_RUL_scaled_list)):
+            # In
+            unit_number_i=unit_number_RUL_scaled_list[i]#取出第i台发动机的数据
+            unit_number_i_var=unit_number_i.var(axis=0)#计算各传感器的方差
+            # In
+            good_index_i=unit_number_i_var>-1
+            unit_number_i_good=unit_number_i[:,good_index_i]
+            # In
+            knee_point_i=knee_point_np[i,0]
+            # In
+            #unit_number_i_good=unit_number_i_good[knee_point_i:unit_number_i_good.shape[0],:]
+            unit_number_i_good=unit_number_i_good[0:unit_number_i_good.shape[0],:]
+            # In
+            train_X_i=[]
+
+            train_X_i=self._generate_final_test_from_one_unit(unit_number_i_good,TIMESTEPS=self.num_steps)
+
+            train_X_list.append(train_X_i)
+
+        return train_X_list
     def _prepare_data(self, seq):
         # split into items of input_size
         seq = [np.array(seq[i * self.input_size: (i + 1) * self.input_size])

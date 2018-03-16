@@ -18,6 +18,19 @@ import matplotlib.pyplot as plt
 import tensorflow.contrib.slim as slim
 from LSTM_model_RUL import LstmRNN
 # In[]
+import tensorflow as tf
+
+sess = tf.InteractiveSession()
+cons1 = tf.constant([4, 2, 3], shape=[3])
+cons2 = tf.constant([2, 5, 6], shape=[3])
+a=tf.abs(cons1 - cons2)
+b=tf.exp(tf.cast(a, tf.float32))-1
+c=tf.reduce_sum(b)
+#loss = tf.reduce_sum(tf.exp(tf.abs(cons1 - cons2))-1, name="loss_mse_train")
+print(sess.run(c))
+# [[1 2 3]
+#  [3 3 3]]
+# In[]
 '''
 命令行参数定义
 '''

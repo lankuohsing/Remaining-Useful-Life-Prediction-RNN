@@ -108,8 +108,8 @@ class LstmRNN(object):
         self.pred=tf.reshape(self.pred,[-1])
         self.targets=tf.reshape(self.targets,[-1])
         # self.loss = -tf.reduce_sum(targets * tf.log(tf.clip_by_value(prediction, 1e-10, 1.0)))
-        self.loss = tf.reduce_mean(tf.square(self.pred - self.targets), name="loss_mse_train")
-        #self.loss = tf.reduce_sum(tf.exp(tf.abs(self.pred - self.targets))-1, name="loss_mse_train")
+        #self.loss = tf.reduce_mean(tf.square(self.pred - self.targets), name="loss_mse_train")
+        self.loss = tf.reduce_sum(tf.exp(tf.abs(self.pred - self.targets))-1, name="loss_mse_train")
         self.optim = tf.train.RMSPropOptimizer(self.learning_rate).minimize(self.loss, name="rmsprop_optim")
 
         # Separated from train loss.

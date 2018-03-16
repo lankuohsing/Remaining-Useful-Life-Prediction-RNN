@@ -34,6 +34,7 @@ def get_between_cluster_se(unit_number_scaled_0,window=5):
         between_cluster_se_dot_i=(between_cluster_se_list[i+1]-
                                   between_cluster_se_list[i])/(window)*1000
         between_cluster_se_dot_list.append(between_cluster_se_dot_i)
+
     for i in range(0,len(between_cluster_se_dot_list)):#归一化？
         between_cluster_se_dot_list[i]=between_cluster_se_dot_list[i]/between_cluster_se_dot_list[-1]
     return between_cluster_se_list,between_cluster_se_dot_list

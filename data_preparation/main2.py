@@ -23,7 +23,7 @@ import numpy as np
 import pandas as pd
 # In[]
 path='train_FD001_scaled_to_(0, 1)_selected.csv'
-unit_number_list=read_scaled_train_data(path,isCut=True)
+unit_number_list=read_scaled_train_data(path,isCut=False)
 path2='knee_point_list.csv'
 knee_point_DataFrame=pd.read_csv(path2,header=0,encoding='utf-8')
 knee_point_np=knee_point_DataFrame.as_matrix()

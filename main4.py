@@ -22,7 +22,7 @@ from LSTM_model_RUL import LstmRNN
 '''
 
 flags = tf.app.flags
-flags.DEFINE_string("run_mode", "train", "runing mode,train or test. [train]")
+flags.DEFINE_string("run_mode", "test", "runing mode,train or test. [train]")
 flags.DEFINE_integer("input_size", 12, "Input size [21]")
 flags.DEFINE_integer("output_size", 1, "Output size [1]")
 flags.DEFINE_integer("num_steps", 10, "Num of steps [30]")
@@ -94,9 +94,9 @@ def show_all_variables():
 run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
-for FLAGS.num_layers in [1,2,3,4]:
-    for FLAGS.lstm_size in [100,110,120,130,140,150,160]:
-        for FLAGS.num_steps in [5,10,15,20,25,30]:
+for FLAGS.num_layers in [1,2]:
+    for FLAGS.lstm_size in [100,110,120,130]:
+        for FLAGS.num_steps in [5,10,15,20,25]:
             tf.reset_default_graph()
             with tf.Session(config=run_config) as sess:
 
@@ -140,6 +140,6 @@ for FLAGS.num_layers in [1,2,3,4]:
 
 
 # In[]
-file=open('S_list.txt','w')
+file=open('S_list_2_130_25.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()

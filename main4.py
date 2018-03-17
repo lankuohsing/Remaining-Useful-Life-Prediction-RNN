@@ -36,8 +36,8 @@ flags.DEFINE_integer("init_epoch", 5, "Num. of epoches considered as early stage
 flags.DEFINE_integer("max_epoch", 50, "Total training epoches. [50]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_integer("sample_size", 10, "Number of units to plot during training. [10]")
-flags.DEFINE_string("logs_dir", "logs_97_2", "directory for logs. [logs]")
-flags.DEFINE_string("plots_dir", "figures_97_2", "directory for plot figures. [figures]")
+flags.DEFINE_string("logs_dir", "logs_97_1", "directory for logs. [logs]")
+flags.DEFINE_string("plots_dir", "figures_97_1", "directory for plot figures. [figures]")
 # In[]
 FLAGS = flags.FLAGS
 #打印命令行参数
@@ -95,8 +95,8 @@ run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
 for FLAGS.num_layers in [1]:
-    for FLAGS.lstm_size in [32,64,128,256]:
-        for FLAGS.num_steps in [5,10,15,20,25]:
+    for FLAGS.lstm_size in [256]:
+        for FLAGS.num_steps in [25]:
             tf.reset_default_graph()
             with tf.Session(config=run_config) as sess:
 
@@ -146,6 +146,6 @@ for FLAGS.num_layers in [1]:
 
 
 # In[]
-file=open('S_list_1_256_25.txt','w')
+file=open('S_list_1_256_25_rnn.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()

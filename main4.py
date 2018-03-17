@@ -113,7 +113,7 @@ for FLAGS.num_layers in [1]:
                     )
                 show_all_variables()
                 RUL_Data=RULDataSet(
-                        scaled_train_path='unit_number_RUL_97.csv',
+                        scaled_train_path='unit_number_RUL_max.csv',
                         scaled_test_path='test_FD001_scaled_selected.csv',
                         knee_point_path='knee_point_list.csv',
                         num_steps=FLAGS.num_steps,
@@ -146,6 +146,6 @@ for FLAGS.num_layers in [1]:
 
 
 # In[]
-file=open('S_list_1_256_25_forget_bias=0.txt','w')
+file=open('S_list_1_256_25_max.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()

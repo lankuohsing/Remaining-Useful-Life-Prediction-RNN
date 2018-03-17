@@ -29,15 +29,15 @@ flags.DEFINE_integer("num_steps", 10, "Num of steps [30]")
 flags.DEFINE_integer("num_layers", 1, "Num of layer [1]")
 flags.DEFINE_integer("lstm_size", 128, "Size of one LSTM cell [128]")
 flags.DEFINE_integer("batch_size", 64, "The size of batch images [64]")
-flags.DEFINE_float("keep_prob", 1, "Keep probability of dropout layer. [0.8]")
+flags.DEFINE_float("keep_prob", 0.9, "Keep probability of dropout layer. [0.8]")
 flags.DEFINE_float("init_learning_rate", 0.001, "Initial learning rate at early stage. [0.001]")
 flags.DEFINE_float("learning_rate_decay", 0.99, "Decay rate of learning rate. [0.99]")
 flags.DEFINE_integer("init_epoch", 5, "Num. of epoches considered as early stage. [5]")
-flags.DEFINE_integer("max_epoch", 50, "Total training epoches. [50]")
+flags.DEFINE_integer("max_epoch", 100, "Total training epoches. [50]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_integer("sample_size", 10, "Number of units to plot during training. [10]")
-flags.DEFINE_string("logs_dir", "logs_97_1", "directory for logs. [logs]")
-flags.DEFINE_string("plots_dir", "figures_97_1", "directory for plot figures. [figures]")
+flags.DEFINE_string("logs_dir", "logs_97_0", "directory for logs. [logs]")
+flags.DEFINE_string("plots_dir", "figures_97_0", "directory for plot figures. [figures]")
 # In[]
 FLAGS = flags.FLAGS
 #打印命令行参数
@@ -94,8 +94,8 @@ def show_all_variables():
 run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
-for FLAGS.num_layers in [1]:
-    for FLAGS.lstm_size in [256]:
+for FLAGS.num_layers in [4]:
+    for FLAGS.lstm_size in [512]:
         for FLAGS.num_steps in [25]:
             tf.reset_default_graph()
             with tf.Session(config=run_config) as sess:
@@ -113,7 +113,7 @@ for FLAGS.num_layers in [1]:
                     )
                 show_all_variables()
                 RUL_Data=RULDataSet(
-                        scaled_train_path='unit_number_RUL_max.csv',
+                        scaled_train_path='unit_number_RUL_97.csv',
                         scaled_test_path='test_FD001_scaled_selected.csv',
                         knee_point_path='knee_point_list.csv',
                         num_steps=FLAGS.num_steps,
@@ -146,6 +146,6 @@ for FLAGS.num_layers in [1]:
 
 
 # In[]
-file=open('S_list_1_256_25_max.txt','w')
+file=open('S_list_4_512_25_100epoch.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()

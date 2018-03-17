@@ -94,7 +94,7 @@ def show_all_variables():
 run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
-for FLAGS.num_layers in [1,2]:
+for FLAGS.num_layers in [1]:
     for FLAGS.lstm_size in [32,64,128,256]:
         for FLAGS.num_steps in [5,10,15,20,25]:
             tf.reset_default_graph()
@@ -145,6 +145,6 @@ for FLAGS.num_layers in [1,2]:
 
 
 # In[]
-file=open('S_list_2_256_25.txt','w')
+file=open('S_list_1_256_25.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()

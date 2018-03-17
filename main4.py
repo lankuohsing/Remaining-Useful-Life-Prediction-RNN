@@ -22,7 +22,7 @@ from LSTM_model_RUL import LstmRNN
 '''
 
 flags = tf.app.flags
-flags.DEFINE_string("run_mode", "test", "runing mode,train or test. [train]")
+flags.DEFINE_string("run_mode", "train", "runing mode,train or test. [train]")
 flags.DEFINE_integer("input_size", 12, "Input size [21]")
 flags.DEFINE_integer("output_size", 1, "Output size [1]")
 flags.DEFINE_integer("num_steps", 10, "Num of steps [30]")
@@ -33,7 +33,7 @@ flags.DEFINE_float("keep_prob", 1, "Keep probability of dropout layer. [0.8]")
 flags.DEFINE_float("init_learning_rate", 0.001, "Initial learning rate at early stage. [0.001]")
 flags.DEFINE_float("learning_rate_decay", 0.99, "Decay rate of learning rate. [0.99]")
 flags.DEFINE_integer("init_epoch", 5, "Num. of epoches considered as early stage. [5]")
-flags.DEFINE_integer("max_epoch", 100, "Total training epoches. [50]")
+flags.DEFINE_integer("max_epoch", 50, "Total training epoches. [50]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 flags.DEFINE_integer("sample_size", 10, "Number of units to plot during training. [10]")
 flags.DEFINE_string("logs_dir", "logs_97_2", "directory for logs. [logs]")
@@ -95,7 +95,7 @@ run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
 for FLAGS.num_layers in [1,2]:
-    for FLAGS.lstm_size in [100,110,120,130]:
+    for FLAGS.lstm_size in [32,64,128,256]:
         for FLAGS.num_steps in [5,10,15,20,25]:
             tf.reset_default_graph()
             with tf.Session(config=run_config) as sess:
@@ -121,8 +121,13 @@ for FLAGS.num_layers in [1,2]:
                         )
                 if FLAGS.run_mode=="train":
                     rnn_model.train(RUL_Data, FLAGS)
-
-
+                    final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
+                    a0=final_test_pred_last_np - final_test_RUL
+                    a=np.sign(a0)*a0/(11.5-1.5*np.sign(a0))
+                    b=np.exp(a)-1
+                    S=np.sum(b)
+                    print("S:",S)
+                    S_list.append(S)
 
                 else:
                     rnn_model.load()
@@ -140,6 +145,6 @@ for FLAGS.num_layers in [1,2]:
 
 
 # In[]
-file=open('S_list_2_130_25.txt','w')
+file=open('S_list_2_256_25.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()

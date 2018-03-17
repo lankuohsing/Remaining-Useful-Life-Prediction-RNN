@@ -121,6 +121,7 @@ for FLAGS.num_layers in [1]:
                         )
                 if FLAGS.run_mode=="train":
                     rnn_model.train(RUL_Data, FLAGS)
+                    final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
                     final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
                     a0=final_test_pred_last_np - final_test_RUL
                     a=np.sign(a0)*a0/(11.5-1.5*np.sign(a0))

@@ -146,6 +146,6 @@ for FLAGS.num_layers in [1]:
 
 
 # In[]
-file=open('S_list_1_256_25_rnn.txt','w')
+file=open('S_list_1_256_25_forget_bias=0.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()

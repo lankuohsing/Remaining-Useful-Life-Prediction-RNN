@@ -56,14 +56,14 @@ for i in range(0,len(train_scaled_increase_sensor_list)):
     between_cluster_se_list_i,between_cluster_se_dot_list_i=\
     get_between_cluster_se(train_scaled_decrease_sensor_list_i,window=window)
     between_cluster_se_dot_list_list.append(between_cluster_se_dot_list_i)
-    '''
-    plt.figure(i*2)
+
+    plt.figure(i*10)
     plot_between_cluster_se=plt.plot(between_cluster_se_list_i,'r.')
-    plt.savefig('plot_distance1/'+str(i)+'th unit\'s between_cluster_se_list'+'.png')
-    plt.figure(i*2+1)
+    plt.savefig('plot_distance1/'+str(i)+'th unit\'s between_cluster_se_list'+'.png',dpi = 500)
+    plt.figure(i*10+1)
     plot_between_cluster_se_dot=plt.plot(between_cluster_se_dot_list_i,'b.')
-    plt.savefig('plot_distance1/'+str(i)+'th unit\'s between_cluster_se_dot_list'+'.png')
-    '''
+    plt.savefig('plot_distance1/'+str(i)+'th unit\'s between_cluster_se_dot_list'+'.png',dpi = 500)
+
     increase_knee_point_i=\
     get_knee_point(between_cluster_se_list_i,
                    between_cluster_se_dot_list_i,
@@ -91,10 +91,10 @@ for i in range(0,len(train_scaled_decrease_sensor_list)):
     get_between_cluster_se(train_scaled_decrease_sensor_list_i,window=window)
     between_cluster_se_dot_list_list.append(between_cluster_se_dot_list_i)
     '''
-    plt.figure(i*2)
+    plt.figure(i*10)
     plot_between_cluster_se=plt.plot(between_cluster_se_list_i,'r.')
     plt.savefig('plot_distance1/'+str(i)+'th unit\'s between_cluster_se_list'+'.png')
-    plt.figure(i*2+1)
+    plt.figure(i*10+1)
     plot_between_cluster_se_dot=plt.plot(between_cluster_se_dot_list_i,'b.')
     plt.savefig('plot_distance1/'+str(i)+'th unit\'s between_cluster_se_dot_list'+'.png')
     '''

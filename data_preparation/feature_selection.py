@@ -52,7 +52,7 @@ for i in range(sensor_num):
     for j in range(train_unit_num):
         plt.plot(train_unit_number_list[j][:,i],'b')
     plt.tick_params(labelsize=20)
-    plt.savefig('plot_sensor/'+str(i)+'_sensor'+'.png')
+    plt.savefig('plot_sensor/'+str(i)+'_sensor'+'.png',dpi = None)
     plt.show()
 # In[]
 from scipy.stats import pearsonr

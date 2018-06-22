@@ -49,7 +49,7 @@ for i in range(S_np.shape[0]):
     plt.xlabel("num_steps",fontsize=20)
     plt.ylabel("score",fontsize=20)
     plt.savefig('plot_test/'+'num_layers='+str(num_layers_np[i])+
-                    '_lstm_size='+str(lstm_size_np[j])+'.png')
+                    '_lstm_size='+str(lstm_size_np[j])+'.png',dpi = 500)
     plt.show()
 
 # In[]

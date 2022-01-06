@@ -94,8 +94,8 @@ def show_all_variables():
 run_config = tf.ConfigProto()
 run_config.gpu_options.allow_growth = True
 #print("run_config.batch_size:",run_config.batch_size)
-for FLAGS.num_layers in [4]:
-    for FLAGS.lstm_size in [512]:
+for FLAGS.num_layers in [1]:
+    for FLAGS.lstm_size in [256]:
         for FLAGS.num_steps in [25]:
             tf.reset_default_graph()
             with tf.Session(config=run_config) as sess:
@@ -113,7 +113,7 @@ for FLAGS.num_layers in [4]:
                     )
                 show_all_variables()
                 RUL_Data=RULDataSet(
-                        scaled_train_path='unit_number_RUL_97.csv',
+                        scaled_train_path='./data_preparation/unit_number_RUL_130.csv',
                         scaled_test_path='test_FD001_scaled_selected.csv',
                         knee_point_path='knee_point_list.csv',
                         num_steps=FLAGS.num_steps,
@@ -124,7 +124,7 @@ for FLAGS.num_layers in [4]:
                     final_test_pred_list=rnn_model.test(RUL_Data, FLAGS)
                     final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
                     a0=final_test_pred_last_np - final_test_RUL
-                    a=np.sign(a0)*a0/(11.5-1.5*np.sign(a0))
+                    a=np.sign(a0)*a0/(11.5+1.5*np.sign(a0))
                     b=np.exp(a)-1
                     S=np.sum(b)
                     print("S:",S)
@@ -136,7 +136,7 @@ for FLAGS.num_layers in [4]:
 
                     final_test_pred_last_np=np.array([final_test_pred_list[i][0][-1] for i in range(len(final_test_pred_list))])
                     a0=final_test_pred_last_np - final_test_RUL
-                    a=np.sign(a0)*a0/(11.5-1.5*np.sign(a0))
+                    a=np.sign(a0)*a0/(11.5+1.5*np.sign(a0))
                     b=np.exp(a)-1
                     S=np.sum(b)
                     print("S:",S)
@@ -146,6 +146,6 @@ for FLAGS.num_layers in [4]:
 
 
 # In[]
-file=open('S_list_4_512_25_100epoch.txt','w')
+file=open('S_list_1_256_25_100epoch.txt','w')
 file.write("S_list:"+str(S_list)+"\n");
 file.close()
